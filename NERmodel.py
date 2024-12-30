@@ -1,3 +1,4 @@
+from builtins import str
 from transformers import AutoModel, AutoTokenizer
 
 # Specify a cache directory to store model files on disk
