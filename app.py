@@ -53,5 +53,5 @@ def analyze_text():
 
 
 if __name__ == '__main__':
-    # port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=8080, debug=True)
+   port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT is not set
+   app.run(host="0.0.0.0", port=port)
