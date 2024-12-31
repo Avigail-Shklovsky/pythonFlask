@@ -34,13 +34,13 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/analyze', methods=['POST'])
 def analyze_text():
     print("in the py func")
     from NERmodel import analyze_text_with_model  # Import here to save memory
     data = request.json
     sentence = data.get('text')
-
 
     if not sentence:
         return jsonify({"error": "No text provided"}), 400
@@ -50,6 +50,7 @@ def analyze_text():
         return jsonify({"embeddings": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
