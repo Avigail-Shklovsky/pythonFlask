@@ -22,8 +22,8 @@
 
 
 
-from builtins import str
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModelForTokenClassification, AutoTokenizer
+import torch
 
 # Specify a cache directory to store model files on disk
 cache_directory = "./cache"
@@ -33,7 +33,7 @@ tokenizer = AutoTokenizer.from_pretrained(
     'dicta-il/dictabert-joint',
     cache_dir=cache_directory  # Specify cache directory
 )
-model = AutoModel.from_pretrained(
+model = AutoModelForTokenClassification.from_pretrained(
     'dicta-il/dictabert-joint',
     cache_dir=cache_directory,  # Specify cache directory
     trust_remote_code=True
@@ -42,4 +42,19 @@ model = AutoModel.from_pretrained(
 model.eval()
 
 def analyze_text_with_model(sentence: str):
-    return model.predict([sentence], tokenizer, output_style='json')
+    # Tokenize the input sentence
+    inputs = tokenizer(sentence, return_tensors="pt")
+
+    # Run the model on the tokenized inputs
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    # Get the predictions (e.g., labels or logits)
+    logits = outputs.logits
+    predicted_ids = torch.argmax(logits, dim=-1)
+
+    # Convert predicted token IDs to tokens
+    predicted_tokens = tokenizer.convert_ids_to_tokens(predicted_ids[0].tolist())
+    
+    return predicted_tokens
+
