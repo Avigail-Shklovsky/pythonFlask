@@ -32,7 +32,7 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/analyze": {"origins": ["http://127.0.0.1:8080", "https://pythonflask-production.up.railway.app"]}})
 
 
 @app.route('/analyze', methods=['POST'])
