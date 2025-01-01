@@ -80,5 +80,6 @@ model.eval()
 
 def analyze_text_with_model(sentence: str):
     # Use the same prediction logic as localhost
-    return model.predict([sentence], tokenizer, output_style='json')
+    return "hello"
+    # return model.predict([sentence], tokenizer, output_style='json')
 
