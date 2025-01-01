@@ -61,27 +61,27 @@
 
 
 # in the local works, rail 502
-# from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoTokenizer
 
-# # Specify a cache directory to store model files on disk
-# cache_directory = "./cache"
+# Specify a cache directory to store model files on disk
+cache_directory = "./cache"
 
-# # Load tokenizer and model with caching
-# tokenizer = AutoTokenizer.from_pretrained(
-#     'dicta-il/dictabert-joint',
-#     cache_dir=cache_directory  # Specify cache directory
-# )
-# model = AutoModel.from_pretrained(
-#     'dicta-il/dictabert-joint',
-#     cache_dir=cache_directory,  # Specify cache directory
-#     trust_remote_code=True
-# )
+# Load tokenizer and model with caching
+tokenizer = AutoTokenizer.from_pretrained(
+    'dicta-il/dictabert-joint',
+    cache_dir=cache_directory  # Specify cache directory
+)
+model = AutoModel.from_pretrained(
+    'dicta-il/dictabert-joint',
+    cache_dir=cache_directory,  # Specify cache directory
+    trust_remote_code=True
+)
 
-# model.eval()
+model.eval()
 
-# def analyze_text_with_model(sentence: str):
-#     # Use the same prediction logic as localhost
-#     return model.predict([sentence], tokenizer, output_style='json')
+def analyze_text_with_model(sentence: str):
+    # Use the same prediction logic as localhost
+    return model.predict([sentence], tokenizer, output_style='json')
 
 
 # returns 200 - with an array of enmaty rokens
@@ -173,42 +173,42 @@
 #     return embeddings
 
 
+# 502
+# from transformers import AutoModelForTokenClassification, AutoTokenizer
+# import torch
+# import logging
 
-from transformers import AutoModelForTokenClassification, AutoTokenizer
-import torch
-import logging
+# # Enable logging
+# logging.basicConfig(level=logging.DEBUG)
 
-# Enable logging
-logging.basicConfig(level=logging.DEBUG)
+# cache_directory = "./cache"
 
-cache_directory = "./cache"
+# # Log the start of model loading
+# logging.debug("Loading tokenizer and model...")
 
-# Log the start of model loading
-logging.debug("Loading tokenizer and model...")
+# tokenizer = AutoTokenizer.from_pretrained('dicta-il/dictabert-joint', cache_dir=cache_directory)
+# model = AutoModelForTokenClassification.from_pretrained('dicta-il/dictabert-joint', cache_dir=cache_directory, trust_remote_code=True)
 
-tokenizer = AutoTokenizer.from_pretrained('dicta-il/dictabert-joint', cache_dir=cache_directory)
-model = AutoModelForTokenClassification.from_pretrained('dicta-il/dictabert-joint', cache_dir=cache_directory, trust_remote_code=True)
+# # Convert model to half precision to save memory
+# model = model.half()
 
-# Convert model to half precision to save memory
-model = model.half()
+# model.eval()
 
-model.eval()
-
-def analyze_text_with_model(sentence: str):
-    logging.debug(f"Tokenizing sentence: {sentence}")
+# def analyze_text_with_model(sentence: str):
+#     logging.debug(f"Tokenizing sentence: {sentence}")
     
-    # Tokenization with truncation
-    inputs = tokenizer(sentence, return_tensors="pt", truncation=True, padding=True, max_length=128)
-    logging.debug(f"Inputs: {inputs}")
+#     # Tokenization with truncation
+#     inputs = tokenizer(sentence, return_tensors="pt", truncation=True, padding=True, max_length=128)
+#     logging.debug(f"Inputs: {inputs}")
 
-    with torch.no_grad():
-        outputs = model(**inputs)
+#     with torch.no_grad():
+#         outputs = model(**inputs)
     
-    logits = outputs.logits
-    predicted_ids = torch.argmax(logits, dim=-1)
-    predicted_tokens = tokenizer.convert_ids_to_tokens(predicted_ids[0].tolist())
+#     logits = outputs.logits
+#     predicted_ids = torch.argmax(logits, dim=-1)
+#     predicted_tokens = tokenizer.convert_ids_to_tokens(predicted_ids[0].tolist())
     
-    # Log the model's predictions
-    logging.debug(f"Predicted Tokens: {predicted_tokens}")
+#     # Log the model's predictions
+#     logging.debug(f"Predicted Tokens: {predicted_tokens}")
 
-    return predicted_tokens
+#     return predicted_tokens
