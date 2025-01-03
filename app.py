@@ -8,7 +8,7 @@ import re
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/analyze": {"origins": ["http://127.0.0.1:8080","http://localhost:3000" "https://pythonflask-production.up.railway.app",re.compile(r"https://.*\.vercel\.app"),]}})
+cors = CORS(app, resources={r"/analyze": {"origins": ["http://127.0.0.1:8080","http://localhost:3000", "https://pythonflask-production.up.railway.app",re.compile(r"https://.*\.vercel\.app"),]}})
 
 
 @app.route('/analyze', methods=['POST'])
