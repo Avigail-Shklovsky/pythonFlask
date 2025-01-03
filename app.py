@@ -35,7 +35,7 @@ import uuid
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/analyze": {"origins": ["http://127.0.0.1:8080", "https://pythonflask-production.up.railway.app"]}})
+cors = CORS(app, resources={r"/analyze": {"origins": ["http://127.0.0.1:8080", "https://pythonflask-production.up.railway.app", "*.vercel.app"]}})
 
 
 @app.route('/analyze', methods=['POST'])
