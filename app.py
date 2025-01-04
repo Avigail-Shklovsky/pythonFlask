@@ -24,6 +24,7 @@ def analyze_text():
 
     try:
         result = analyze_text_with_model(sentence)
+        print(sentence)
 
         #  Generate a unique job ID using uuid4
         job_id = str(uuid.uuid4())
